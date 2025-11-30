@@ -334,7 +334,11 @@ function applyServiceImageConfig() {
                     img.src = path;
                     img.dataset.imgLocked = 'true';
                 };
-                test.src = path + `?v=${Date.now()}`;
+                if (/^data:/i.test(path)) {
+                    test.src = path;
+                } else {
+                    test.src = path + `?v=${Date.now()}`;
+                }
             });
         })
         .catch(() => {});
