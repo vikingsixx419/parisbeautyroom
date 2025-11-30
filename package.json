@@ -1,0 +1,33 @@
+{
+  "name": "paris-beauty-room",
+  "version": "1.0.0",
+  "description": "Sitio web profesional para PARIS Beauty Room - Salón de belleza",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080 -o",
+    "build": "echo 'Build completed - Static site ready for deployment'",
+    "deploy": "echo 'Ready for deployment to hosting service'"
+  },
+  "keywords": [
+    "salon",
+    "beauty",
+    "estetica",
+    "manicura",
+    "pedicura",
+    "tratamientos-faciales",
+    "paris-beauty-room"
+  ],
+  "author": "PARIS Beauty Room",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paris-beauty-room/website.git"
+  },
+  "homepage": "https://parisbeautyroom.com",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

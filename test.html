@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test - PARIS Beauty Room</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .ok { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Test de servidor local</h1>
+  <p>Si ves esta página, el servidor está funcionando correctamente.</p>
+  
+  <h2>Recursos cargados:</h2>
+  <ul>
+    <li id="test-js">JavaScript: <span class="error">No cargado</span></li>
+    <li id="test-css">CSS: <span class="error">No cargado</span></li>
+    <li id="test-img">Imagen: <span class="error">No cargada</span></li>
+  </ul>
+  
+  <script>
+    // Test de carga de recursos
+    function checkResource(url, id) {
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            document.getElementById(id).innerHTML = '<span class="ok">Cargado correctamente</span>';
+          } else {
+            document.getElementById(id).innerHTML = '<span class="error">Error ' + response.status + '</span>';
+          }
+        })
+        .catch(error => {
+          document.getElementById(id).innerHTML = '<span class="error">Error: ' + error.message + '</span>';
+        });
+    }
+    
+    checkResource('script.js', 'test-js');
+    checkResource('styles.css', 'test-css');
+    checkResource('images/photo_2025-10-15_14-54-55.jpg', 'test-img');
+  </script>
+  
+  <p><a href="index.html">Ir al sitio principal</a></p>
+</body>
+</html>

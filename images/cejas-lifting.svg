@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#fdebee"/>
+  <path d="M120 300c80-60 200-100 280-100s200 40 280 100c-80 60-200 100-280 100s-200-40-280-100z" fill="none" stroke="#c84a60" stroke-width="12"/>
+  <ellipse cx="400" cy="300" rx="70" ry="48" fill="#fff" stroke="#e75d73" stroke-width="8"/>
+  <circle cx="400" cy="300" r="20" fill="#c84a60"/>
+  <path d="M160 240c60-50 140-80 240-90" fill="none" stroke="#e75d73" stroke-width="10" stroke-linecap="round"/>
+  <text x="400" y="520" font-size="28" text-anchor="middle" fill="#e75d73" font-family="Poppins, Arial">Lifting de pestañas</text>
+</svg>

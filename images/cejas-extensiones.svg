@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#fdebee"/>
+  <path d="M120 320c80-50 200-90 280-90s200 40 280 90" fill="none" stroke="#c84a60" stroke-width="12"/>
+  <ellipse cx="400" cy="320" rx="70" ry="46" fill="#fff" stroke="#e75d73" stroke-width="8"/>
+  <circle cx="400" cy="320" r="18" fill="#c84a60"/>
+  <g stroke="#e75d73" stroke-width="6" stroke-linecap="round">
+    <path d="M360 380c10 18 20 26 40 26"/>
+    <path d="M380 385c8 16 18 24 34 24"/>
+    <path d="M400 388c8 16 18 24 34 24"/>
+    <path d="M420 385c8 16 18 24 34 24"/>
+  </g>
+  <text x="400" y="520" font-size="28" text-anchor="middle" fill="#e75d73" font-family="Poppins, Arial">Extensiones tecnológicas</text>
+</svg>
