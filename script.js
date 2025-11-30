@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Reemplazar imágenes externas bloqueadas por ORB con fotos de Picsum
-    replaceServiceImages();
+    applyServiceImageConfig();
     // Sobrescribir imágenes de servicios si existen archivos locales con el nombre del servicio
     applyServiceImageOverrides();
 });
@@ -223,72 +222,86 @@ function initGallery() {
 }
 
 // Reemplazo de imágenes de servicios con fotos temáticas de Picsum
-function replaceServiceImages() {
-    const mappings = [
-        {
-            match: /Depilación facial/i,
-            src: 'https://picsum.photos/seed/depilacion-facial-spa/800/600',
-            alt: 'Depilación facial profesional en salón'
-        },
-        {
-            match: /Depilación corporal/i,
-            src: 'https://picsum.photos/seed/depilacion-corporal-legs/800/600',
-            alt: 'Depilación corporal de piernas con técnica suave'
-        },
-        {
-            match: /Delicadas|ingles|axilas/i,
-            src: 'https://picsum.photos/seed/depilacion-delicadas-spa/800/600',
-            alt: 'Depilación de zonas delicadas como axilas e ingles'
-        },
-        {
-            match: /drenaje linfático|Presoterapia.*drenaje/i,
-            src: 'https://picsum.photos/seed/presoterapia-drenaje-legs/800/600',
-            alt: 'Presoterapia para drenaje linfático en piernas'
-        },
-        {
-            match: /Recuperación deportiva|botas de compresión/i,
-            src: 'https://picsum.photos/seed/presoterapia-recuperacion-athlete/800/600',
-            alt: 'Recuperación deportiva con botas de compresión'
-        },
-        {
-            match: /bienestar|wellness|relax/i,
-            src: 'https://picsum.photos/seed/presoterapia-wellness-relax/800/600',
-            alt: 'Sesión de presoterapia para bienestar y relax'
-        }
-    ];
-
-    const imgs = document.querySelectorAll('section img, .service-card img');
-
-    imgs.forEach(img => {
-        const alt = img.getAttribute('alt') || '';
-        const titleEl = img.closest('.service-card')?.querySelector('.service-title');
-        const title = titleEl ? titleEl.textContent : '';
-
-        for (const m of mappings) {
-            if (m.match.test(alt) || (title && m.match.test(title))) {
-                img.src = m.src;
-                img.setAttribute('alt', m.alt);
-                img.setAttribute('loading', 'lazy');
-                img.setAttribute('decoding', 'async');
-                img.setAttribute('referrerpolicy', 'no-referrer');
-                break;
-            }
-        }
-    });
-}
 
 // Cargar imágenes por nombre de servicio si existen en /images
 function applyServiceImageOverrides() {
     const imgs = document.querySelectorAll('img[data-service]');
     imgs.forEach(img => {
+        if (img.dataset.imgLocked === 'true') return;
         const service = img.dataset.service;
         if (!service) return;
 
-        const candidates = [
+        const variations = {
+            'esmaltado-semipermanente': [
+                'images/esmaltado semipermanente.webp',
+                'images/esmaltado semipermanente.jpg',
+                'images/esmaltado semipermanente.png',
+                'images/esmaltado semi.jpg.jpg'
+            ],
+            'kapping': [
+                'images/kapping.webp',
+                'images/kapping.jpg',
+                'images/kapping.png',
+                'images/kapping.jpg.jpg'
+            ],
+            'unas-esculpidas': [
+                'images/unas esculpidas.webp',
+                'images/unas esculpidas.jpg',
+                'images/unas esculpidas.png',
+                'images/esculpidas.jpg',
+                'images/esculpidasjpg.jpg',
+                'images/esculpidas.jpg.jpg'
+            ],
+            'pedicura': [
+                'images/pedicura.webp',
+                'images/pedicura.jpg',
+                'images/pedicura.png',
+                'images/pedicura.jpg.jpg'
+            ],
+            'estetica-mantenimiento': [
+                'images/estetica mantenimiento.webp',
+                'images/estetica mantenimiento.jpg',
+                'images/estetica mantenimiento.png',
+                'images/estetica-mantenimiento.webp',
+                'images/estetica-mantenimiento.jpg',
+                'images/estetica-mantenimiento.png',
+                'images/estetica y mantenimiento.jpg.jpg',
+                'images/estetica y mantenimiento 2.jpg'
+            ],
+            'pelo-color': [
+                'images/pelo-color.jpg',
+                'images/color y mechas.jpg.jpg',
+                'images/photo_2025-10-15_15-04-31.jpg'
+            ],
+            'pelo-corte': [
+                'images/pelo-corte.jpg',
+                'images/corte y forma.jpg.jpg',
+                'images/corte y forma 2.jpg.jpg',
+                'images/photo_2025-10-15_15-04-22.jpg'
+            ],
+            'pelo-peinado': [
+                'images/pelo-peinado.jpg',
+                'images/peinados.jpg',
+                'images/peinados 1.jpg.jpg',
+                'images/peinados 2.jpg',
+                'images/peinados 3.jpg',
+                'images/peinados 4.jpg',
+                'images/peinados 5.jpg',
+                'images/photo_2025-10-15_15-04-28.jpg'
+            ],
+            'depilacion-delicadas': [
+                'images/depilacion-delicadas.jpg',
+                'images/depilacion.jpg.jpg',
+                'images/depilacion-delicadas.svg'
+            ]
+        };
+
+        const baseCandidates = [
             `images/${service}.webp`,
             `images/${service}.jpg`,
             `images/${service}.png`
         ];
+        const candidates = [...baseCandidates, ...(variations[service] || [])];
 
         const tryLoad = (i) => {
             if (i >= candidates.length) return; // sin override, mantiene src original
@@ -304,6 +317,27 @@ function applyServiceImageOverrides() {
 
         tryLoad(0);
     });
+}
+
+function applyServiceImageConfig() {
+    fetch('images-config.json', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(cfg => {
+            if (!cfg) return;
+            const imgs = document.querySelectorAll('img[data-service]');
+            imgs.forEach(img => {
+                const key = img.dataset.service;
+                const path = cfg[key];
+                if (!path) return;
+                const test = new Image();
+                test.onload = () => {
+                    img.src = path;
+                    img.dataset.imgLocked = 'true';
+                };
+                test.src = path + `?v=${Date.now()}`;
+            });
+        })
+        .catch(() => {});
 }
 
 // Funcionalidad de reserva de citas (básica)

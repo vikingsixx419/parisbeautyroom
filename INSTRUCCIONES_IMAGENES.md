@@ -107,19 +107,33 @@ Una vez que agregues las imágenes, la página se verá profesional con:
 
 ## 🔄 Cambiar fotos de los servicios fácilmente
 
-Ahora puedes reemplazar las fotos de cada servicio simplemente subiendo archivos a la carpeta `images/` con estos nombres. El sitio detecta automáticamente si existen y las usa (acepta `.webp`, `.jpg` o `.png`). Si no existen, se mantiene la imagen actual.
+Ahora puedes reemplazar las fotos de cada servicio de dos maneras sencillas:
 
-### 📁 Nombres de archivo por servicio
-- `esmaltado-semipermanente.jpg` (o `.webp`) – Esmaltado semipermanente
-- `kapping.jpg` (o `.webp`) – Kapping (acrílico, base rubber, polygel)
-- `unas-esculpidas.jpg` (o `.webp`) – Uñas esculpidas
-- `pedicura.jpg` (o `.webp`) – Pedicura
-- `estetica-mantenimiento.jpg` (o `.webp`) – Estética y mantenimiento
+1) Método rápido por nombre: subí archivos a la carpeta `images/` con el nombre del servicio. El sitio detecta automáticamente si existen y las usa (acepta `.webp`, `.jpg` o `.png`). Si no existen, se mantiene la imagen actual.
+
+2) Método por configuración: editá el archivo `images-config.json` y poné el camino de la imagen para cada servicio. Esto tiene prioridad y bloquea la imagen para que no se sobrescriba.
+
+### 📁 Nombres de archivo por servicio (método rápido por nombre)
+- `esmaltado-semipermanente.jpg` – Esmaltado semipermanente
+- `kapping.jpg` – Kapping (acrílico, base rubber, polygel)
+- `unas-esculpidas.jpg` – Uñas esculpidas
+- `pedicura.jpg` – Pedicura
+- `estetica-mantenimiento.jpg` – Estética y mantenimiento
+- `pelo-color.jpg` – Color y mechas
+- `pelo-corte.jpg` – Corte y forma
+- `pelo-peinado.jpg` – Peinado & styling
 
 ### ✅ Cómo hacerlo
-1. Prepara tu foto y ponle el nombre del servicio como arriba (minúsculas, sin acentos, con guiones).
-2. Copia el archivo dentro de la carpeta `images/` del proyecto.
-3. Actualiza la página: al recargar se verá la nueva foto automáticamente.
+1. Prepará tu foto y poné el nombre del servicio como arriba (minúsculas, sin acentos, con guiones).
+2. Copiá el archivo dentro de la carpeta `images/` del proyecto.
+3. Actualizá la página: al recargar se verá la nueva foto automáticamente.
+
+### 🧩 Método por configuración (opcional y prioritario)
+1. Abrí `images-config.json`.
+2. Editá el valor del servicio que quieras cambiar, por ejemplo:
+   - `"pelo-color": "images/color y mechas.jpg.jpg"`
+3. Guardá el archivo y recargá la página.
+4. Este método bloquea la imagen (`data-img-locked"=true`) para que no se reemplace por el método rápido.
 
 ### ℹ️ Detalles técnicos
 - El HTML marca cada imagen con `data-service="…"` y un script intenta cargar primero `images/<servicio>.webp`, luego `.jpg`, luego `.png`.
