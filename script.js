@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Reemplazar imágenes externas bloqueadas por ORB con fotos de Picsum
     replaceServiceImages();
+    // Sobrescribir imágenes de servicios si existen archivos locales con el nombre del servicio
+    applyServiceImageOverrides();
 });
 
 // Efecto de scroll en el header
@@ -272,6 +274,35 @@ function replaceServiceImages() {
                 break;
             }
         }
+    });
+}
+
+// Cargar imágenes por nombre de servicio si existen en /images
+function applyServiceImageOverrides() {
+    const imgs = document.querySelectorAll('img[data-service]');
+    imgs.forEach(img => {
+        const service = img.dataset.service;
+        if (!service) return;
+
+        const candidates = [
+            `images/${service}.webp`,
+            `images/${service}.jpg`,
+            `images/${service}.png`
+        ];
+
+        const tryLoad = (i) => {
+            if (i >= candidates.length) return; // sin override, mantiene src original
+            const test = new Image();
+            test.onload = () => {
+                // Si la imagen existe, usarla como fuente
+                img.src = candidates[i];
+            };
+            test.onerror = () => tryLoad(i + 1);
+            // Evitar caché agresivo en algunos navegadores
+            test.src = candidates[i] + `?v=${Date.now()}`;
+        };
+
+        tryLoad(0);
     });
 }
 

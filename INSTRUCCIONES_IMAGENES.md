@@ -102,3 +102,28 @@ Una vez que agregues las imágenes, la página se verá profesional con:
 ---
 
 **💡 Tip**: Si tienes las imágenes con nombres diferentes, simplemente renómbralas según la lista de arriba.
+
+---
+
+## 🔄 Cambiar fotos de los servicios fácilmente
+
+Ahora puedes reemplazar las fotos de cada servicio simplemente subiendo archivos a la carpeta `images/` con estos nombres. El sitio detecta automáticamente si existen y las usa (acepta `.webp`, `.jpg` o `.png`). Si no existen, se mantiene la imagen actual.
+
+### 📁 Nombres de archivo por servicio
+- `esmaltado-semipermanente.jpg` (o `.webp`) – Esmaltado semipermanente
+- `kapping.jpg` (o `.webp`) – Kapping (acrílico, base rubber, polygel)
+- `unas-esculpidas.jpg` (o `.webp`) – Uñas esculpidas
+- `pedicura.jpg` (o `.webp`) – Pedicura
+- `estetica-mantenimiento.jpg` (o `.webp`) – Estética y mantenimiento
+
+### ✅ Cómo hacerlo
+1. Prepara tu foto y ponle el nombre del servicio como arriba (minúsculas, sin acentos, con guiones).
+2. Copia el archivo dentro de la carpeta `images/` del proyecto.
+3. Actualiza la página: al recargar se verá la nueva foto automáticamente.
+
+### ℹ️ Detalles técnicos
+- El HTML marca cada imagen con `data-service="…"` y un script intenta cargar primero `images/<servicio>.webp`, luego `.jpg`, luego `.png`.
+- Si no encuentra ninguno, deja la imagen original para no romper el diseño.
+
+### 📝 Alt recomendado
+- Usa el nombre del servicio como alt, por ejemplo: “Estética y mantenimiento: reparación, retiro seguro y nivelación”.
