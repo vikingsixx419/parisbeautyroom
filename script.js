@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    applyCacheBust();
     applyServiceImageConfig();
     // Sobrescribir imágenes de servicios si existen archivos locales con el nombre del servicio
     applyServiceImageOverrides();
@@ -552,3 +553,15 @@ function optimizePerformance() {
 
 // Inicializar optimizaciones
 optimizePerformance();
+function applyCacheBust(){
+    const imgs = document.querySelectorAll('img');
+    const v = Date.now();
+    imgs.forEach(img => {
+        const src = img.getAttribute('src') || '';
+        if (!src) return;
+        if (/^data:/i.test(src)) return;
+        if (!/^(?:\.\/)?images\//i.test(src)) return;
+        if (src.includes('?')) return;
+        img.setAttribute('src', `${src}?v=${v}`);
+    });
+}
