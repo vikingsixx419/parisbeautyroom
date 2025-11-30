@@ -26,7 +26,7 @@
     "type": "git",
     "url": "https://github.com/paris-beauty-room/website.git"
   },
-  "homepage": "https://parisbeautyroom.com",
+  "homepage": "https://parisbeautyroom.netlify.app",
   "engines": {
     "node": ">=14.0.0"
   }
